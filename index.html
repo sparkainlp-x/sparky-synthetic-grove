@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1716">
   <meta name="description" content="A standalone Sparky beaver demo visualizing up to 1,048,576 synthetic frame slots. Counts above 65,536 are visualization-only.">
-  <title>Sparky — Many Channels, One Calm Guide</title>
+  <title>Sparky — Synthetic Frame Slots, One Calm Guide</title>
   <style>
     :root {
       color-scheme: dark;
@@ -162,16 +162,16 @@
       <div class="hero-copy">
         <div class="eyebrow"><span class="spark" aria-hidden="true">✦</span> A little more room to explore</div>
         <h1 id="pageTitle">More frame slots.<br><span>One calm guide.</span></h1>
-        <p class="lede">Meet Sparky, your patient beaver guide to a wider synthetic frame-slot playground. Change the displayed count and watch locally generated patterns ripple through the map.</p>
+        <p class="lede">Meet Sparky, a patient beaver guide. Pick a count of synthetic frame slots and Sparky stacks them like sticks in a tidy dam: 32 slots to a group, and never more than 2,048 bins on the map. Every value is generated in your browser; nothing is measured.</p>
         <div class="hero-meta">
-          <span class="pill">Demo values <b>generated locally</b></span>
-          <span class="pill">Display ceiling <b>1,048,576 synthetic slots</b></span>
+          <span class="pill">Synthetic values <b>generated in your browser</b></span>
+          <span class="pill">Visualization ceiling <b>1,048,576 slots</b></span>
         </div>
       </div>
       <div class="mascot-wrap" aria-label="Sparky the beaver mascot">
         <div class="mascot-halo" aria-hidden="true"></div>
         <img class="mascot" src="sparky-beaver.png" alt="Sparky, a friendly chestnut-brown beaver wearing a teal scarf" width="512" height="512">
-        <div class="mascot-tag"><span>Hi, I'm Sparky.</span><br>Let's explore steadily.</div>
+        <div class="mascot-tag"><span>Hi, I'm Sparky.</span><br>All values are synthetic.</div>
       </div>
     </section>
 
@@ -179,17 +179,17 @@
       <article class="metric">
         <div class="metric-label"><i aria-hidden="true"></i>Selected synthetic frame slots</div>
         <div class="metric-value" id="channelMetric">32,768</div>
-        <div class="metric-help">Change the slider below</div>
+        <div class="metric-help" id="selectedHelp">Your selection · 65,536 or fewer</div>
       </article>
       <article class="metric">
-        <div class="metric-label"><i aria-hidden="true"></i>32-slot cell groups</div>
+        <div class="metric-label"><i aria-hidden="true"></i>Software groups of 32 slots</div>
         <div class="metric-value" id="cellMetric">1,024</div>
-        <div class="metric-help">Groups contain 32 synthetic frame slots</div>
+        <div class="metric-help">Selected slots ÷ 32</div>
       </article>
       <article class="metric">
         <div class="metric-label"><i aria-hidden="true"></i>Browser visualization ceiling</div>
         <div class="metric-value">1,048,576</div>
-        <div class="metric-help">32,768 groups of 32 · display only</div>
+        <div class="metric-help">32,768 groups of 32 · display limit, not tested capacity</div>
       </article>
     </section>
 
@@ -197,7 +197,7 @@
       <div class="workspace-head">
         <div>
           <div class="section-kicker">Synthetic frame-slot field</div>
-          <h2 id="mapTitle">A living map of grouped values</h2>
+          <h2 id="mapTitle">Sparky's map of grouped synthetic values</h2>
           <p class="section-help" id="mapHelp">1,024 groups of 32 slots · animated synthetic values</p>
         </div>
         <button class="motion-btn" id="motionButton" type="button" aria-pressed="false">
@@ -209,7 +209,7 @@
           <canvas id="field" role="img" aria-label="Animated map of synthetic frame-slot values"></canvas>
         </div>
         <div class="visualizer-foot">
-          <span id="sampleNote">1,024 display bins · synthetic values only</span>
+          <span id="sampleNote">1,024 display bins · each bin shows 1 group (32 slots) · synthetic values only</span>
           <span class="legend"><span>Lower</span><span class="legend-bar" aria-hidden="true"></span><span>Higher</span></span>
         </div>
       </div>
@@ -217,13 +217,13 @@
         <div class="range-wrap">
           <div class="control-top"><label for="channelRange">Explore synthetic frame slots</label><output class="control-output" id="rangeOutput" for="channelRange">32,768 synthetic slots</output></div>
           <input id="channelRange" type="range" min="32" max="1048576" step="32" value="32768" aria-describedby="rangeHint">
-          <div class="range-hints" id="rangeHint"><span>32 slots</span><span>65,536 software slots configured</span><span>1,048,576 visualization max</span></div>
+          <div class="range-hints" id="rangeHint"><span>32 slots</span><span>Above 65,536: display only</span><span>1,048,576 ceiling</span></div>
         </div>
         <div class="preset-row" aria-label="Quick synthetic slot presets">
           <button class="preset" type="button" data-channels="4096">4,096 slots</button>
           <button class="preset" type="button" data-channels="32768">32,768 slots</button>
           <button class="preset" type="button" data-channels="65536">65,536 slots</button>
-          <button class="preset" type="button" data-channels="1048576">1,048,576 max</button>
+          <button class="preset" type="button" data-channels="1048576">1,048,576 ceiling</button>
         </div>
       </div>
     </section>
@@ -254,6 +254,7 @@
       const range = document.getElementById('channelRange');
       const channelMetric = document.getElementById('channelMetric');
       const cellMetric = document.getElementById('cellMetric');
+      const selectedHelp = document.getElementById('selectedHelp');
       const rangeOutput = document.getElementById('rangeOutput');
       const mapHelp = document.getElementById('mapHelp');
       const sampleNote = document.getElementById('sampleNote');
@@ -275,17 +276,28 @@
       const cols = 64;
       const maxDisplayBins = 2048;
 
+      const plural = (n, one, many) => `${fmt.format(n)} ${n === 1 ? one : many}`;
+
       function updateReadouts() {
         const groups = channelCount / 32;
         const bins = Math.min(groups, maxDisplayBins);
-        const groupsPerBin = groups / bins;
-        const aggregation = groups === bins ? 'one group per bin' : `about ${fmt.format(Number(groupsPerBin.toFixed(1)))} groups per bin`;
+        const fewestGroups = Math.floor(groups / bins);
+        const mostGroups = Math.ceil(groups / bins);
+        let aggregation;
+        if (groups === bins) {
+          aggregation = 'each bin shows 1 group (32 slots)';
+        } else if (fewestGroups === mostGroups) {
+          aggregation = `each bin averages ${fmt.format(fewestGroups)} groups (${fmt.format(fewestGroups * 32)} slots)`;
+        } else {
+          aggregation = `each bin averages ${fmt.format(fewestGroups)}–${fmt.format(mostGroups)} groups (${fmt.format(fewestGroups * 32)}–${fmt.format(mostGroups * 32)} slots)`;
+        }
         channelMetric.textContent = fmt.format(channelCount);
+        selectedHelp.textContent = channelCount > 65536 ? 'Your selection · visualization-only above 65,536' : 'Your selection · 65,536 or fewer';
         cellMetric.textContent = fmt.format(groups);
         rangeOutput.textContent = `${fmt.format(channelCount)} synthetic slots`;
-        mapHelp.textContent = `${fmt.format(groups)} groups of 32 slots · ${fmt.format(bins)} display bins · ${paused ? 'paused synthetic map' : 'animated synthetic values'}`;
-        sampleNote.textContent = `${fmt.format(bins)} display bins · ${aggregation} · synthetic values only`;
-        canvas.setAttribute('aria-label', `Map of ${fmt.format(groups)} synthetic groups of 32 frame slots rendered as ${fmt.format(bins)} display bins; ${aggregation}; values are synthetic only`);
+        mapHelp.textContent = `${plural(groups, 'group', 'groups')} of 32 slots · ${plural(bins, 'display bin', 'display bins')} · ${paused ? 'paused synthetic map' : 'animated synthetic values'}`;
+        sampleNote.textContent = `${plural(bins, 'display bin', 'display bins')} · ${aggregation} · synthetic values only`;
+        canvas.setAttribute('aria-label', `Map of ${plural(groups, 'synthetic group', 'synthetic groups')} of 32 frame slots rendered as ${plural(bins, 'display bin', 'display bins')}; ${aggregation}; values are synthetic only`);
       }
 
       function sizeCanvas() {
