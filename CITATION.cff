@@ -1,9 +1,17 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it as below. It is a standalone browser visualization; every value is SYNTHETIC and generated in the browser. A Zenodo DOI is added at the first release."
+message: "If you use this software, please cite it as below. It is a standalone browser visualization; every value is SYNTHETIC and generated in the browser."
 type: software
 title: "Sparky Synthetic Grove: a standalone browser visualization of synthetic frame slots"
 version: "0.1.0"
 date-released: "2026-10-18"
+doi: "10.5281/zenodo.23462504"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23462504"
+    description: "Concept DOI (all versions)"
+  - type: doi
+    value: "10.5281/zenodo.23462505"
+    description: "Version DOI for v0.1.0"
 license: AGPL-3.0-only
 repository-code: "https://github.com/sparkainlp-x/sparky-synthetic-grove"
 url: "https://sparkainlp-x.github.io/sparky-synthetic-grove/"

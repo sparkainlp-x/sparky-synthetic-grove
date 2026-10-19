@@ -45,7 +45,8 @@ No cookies, analytics, fonts or other external requests. A Content-Security-Poli
 
 ## How to cite
 
-See [CITATION.cff](CITATION.cff). A Zenodo DOI will be listed here after the first release: `10.5281/zenodo.XXXXXXX` (placeholder).
+See [CITATION.cff](CITATION.cff). Cite the concept DOI [10.5281/zenodo.23462504](https://doi.org/10.5281/zenodo.23462504) for all versions,
+or the version DOI [10.5281/zenodo.23462505](https://doi.org/10.5281/zenodo.23462505) for v0.1.0.
 
 > Brisson, J.-F. (2026). *Sparky Synthetic Grove: a standalone browser visualization of synthetic frame slots* (Version 0.1.0) [Computer software]. Spark AI NLP, Fredericton, New Brunswick, Canada. https://github.com/sparkainlp-x/sparky-synthetic-grove
 
