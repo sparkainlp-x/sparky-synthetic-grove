@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below. It is a standalone browser visualization; every value is SYNTHETIC and generated in the browser. A Zenodo DOI is added at the first release."
+type: software
+title: "Sparky Synthetic Grove: a standalone browser visualization of synthetic frame slots"
+version: "0.1.0"
+date-released: "2026-10-18"
+license: AGPL-3.0-only
+repository-code: "https://github.com/sparkainlp-x/sparky-synthetic-grove"
+url: "https://sparkainlp-x.github.io/sparky-synthetic-grove/"
+authors:
+  - family-names: "Brisson"
+    given-names: "Jean-François"
+    orcid: "https://orcid.org/0009-0000-9778-5374"
+    affiliation: "Spark AI NLP, Fredericton, New Brunswick, Canada"
+abstract: >-
+  Standalone HTML page, guided by Sparky the beaver, that groups a selectable
+  count of synthetic frame slots (32 to 1,048,576 in steps of 32) into groups of
+  32 and renders at most 2,048 display bins on a canvas. Every value is generated
+  in the browser; nothing is measured and no sensor, device or network is used.
+  Counts above 65,536 frame slots are visualization-only and do not extend the
+  separate Python array prototype (65,536 software slots) or the separate
+  synthetic robustness benchmark (tested through 32,768 channels).
+keywords:
+  - synthetic data
+  - visualization
+  - browser demo
+  - frame slots
+  - accessibility
+references:
+  - type: software
+    title: "OES32 Membrane Array: atomic scale-out composition of fixed 32-slot OES32 membrane cells"
+    authors:
+      - family-names: "Brisson"
+        given-names: "Jean-François"
+        orcid: "https://orcid.org/0009-0000-9778-5374"
+    repository-code: "https://github.com/sparkainlp-x/oes32-membrane-array"
+    doi: "10.5281/zenodo.23307951"

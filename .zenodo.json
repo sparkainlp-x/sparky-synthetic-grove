@@ -1,0 +1,48 @@
+{
+  "upload_type": "software",
+  "title": "Sparky Synthetic Grove: a standalone browser visualization of synthetic frame slots",
+  "version": "0.1.0",
+  "description": "<p><strong>Research prototype; all values SYNTHETIC.</strong> A standalone HTML page, guided by Sparky the beaver, that groups a selectable count of synthetic frame slots (32 to 1,048,576 in steps of 32) into groups of 32 and renders at most 2,048 display bins on a canvas. Every value is generated in the browser by a fixed wave formula; nothing is measured, and the page makes no network requests and connects to no sensor or device.</p><p><strong>Scope.</strong> Counts above 65,536 frame slots are visualization-only. They do not extend the separate Python array prototype (configured through 65,536 software slots) or the separate synthetic robustness benchmark (tested through 32,768 channels), and are not evidence of additional physical sensors, independent information, throughput or hardware support.</p><p><strong>Accessibility.</strong> Keyboard-operable controls, a pause control, reduced-motion support, described images and canvas, and a strict Content-Security-Policy.</p>",
+  "creators": [
+    {
+      "name": "Brisson, Jean-François",
+      "affiliation": "Spark AI NLP, Fredericton, New Brunswick, Canada",
+      "orcid": "0009-0000-9778-5374"
+    }
+  ],
+  "access_right": "open",
+  "license": "AGPL-3.0-only",
+  "keywords": [
+    "synthetic data",
+    "visualization",
+    "browser demo",
+    "frame slots",
+    "accessibility",
+    "research software"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/sparkainlp-x/sparky-synthetic-grove",
+      "relation": "isSupplementTo",
+      "resource_type": "software",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://sparkainlp-x.github.io/sparky-synthetic-grove/",
+      "relation": "isDocumentedBy",
+      "scheme": "url"
+    },
+    {
+      "identifier": "10.5281/zenodo.23307951",
+      "relation": "references",
+      "resource_type": "software",
+      "scheme": "doi"
+    }
+  ],
+  "language": "eng",
+  "communities": [
+    {
+      "identifier": "spark-ai-nlp"
+    }
+  ]
+}
