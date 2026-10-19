@@ -15,7 +15,7 @@ PAGE = ROOT / "index.html"
 SITE_FILES = ("index.html", "sparky-beaver.webp")
 MAX_IMAGE_BYTES = 500_000
 BANNED = re.compile(
-    r"\b(proven|validated|production[- ]ready|quantum advantage|real[- ]world performance|"
+    r"\b(proven|validat\w*|production[- ]ready|quantum advantage|real[- ]world performance|"
     r"medical|clinical|diagnos\w*|therap\w*|conscious\w*|qubits?|QPU|QEC|free[- ]energy|overunity|investors?)\b",
     re.IGNORECASE,
 )
